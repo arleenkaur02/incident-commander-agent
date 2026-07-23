@@ -3,8 +3,11 @@ import express from "express";
 import { Alert, IncidentRecord } from "./types";
 import { handleAlert } from "./orchestrator";
 
+import path from "path";
+// ...
 const app = express();
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "..", "public")));
 
 const port = process.env.PORT ?? 4000;
 
