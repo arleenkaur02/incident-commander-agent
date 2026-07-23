@@ -1,25 +1,17 @@
 import "dotenv/config";
+import path from "path";
 import express from "express";
 import { Alert, IncidentRecord } from "./types";
 import { handleAlert } from "./orchestrator";
 
-import path from "path";
-// ...
 const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "..", "public")));
 
 const port = process.env.PORT ?? 4000;
 
-// In-memory store of handled incidents, for demo/inspection purposes.
 const incidentHistory: IncidentRecord[] = [];
 
-/**
- * Simulates the webhook endpoint Datadog/PagerDuty would call when an
- * alert fires. In production this would be secured (shared secret / HMAC
- * signature verification) and would validate the payload shape per
- * provider.
- */
 app.post("/webhooks/alert", async (req, res) => {
   const alert = req.body as Alert;
 
