@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Incident Commander Agent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F6F1E7;
+    --bg-panel: #FCFAF5;
+    --bg-raised: #EFE6D5;
+    --line: #E2D6C1;
+    --lavender: #A79BD1;
+    --lavender-deep: #7C6BB0;
+    --lavender-pale: #E7E1F5;
+    --rose: #C98F94;
+    --sage: #93A98C;
+    --ink: #423C4E;
+    --ink-dim: #8C8296;
+    --serif: "Fraunces", Georgia, serif;
+    --sans: "Work Sans", -apple-system, "Segoe UI", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    background-image: radial-gradient(circle at 1px 1px, rgba(167,155,209,0.13) 1px, transparent 0);
+    background-size: 26px 26px;
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.55;
+  }
+
+  a { color: inherit; }
+
+  header {
+    border-bottom: 1px solid var(--line);
+    padding: 26px 32px 20px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    background: rgba(252,250,245,0.6);
+    backdrop-filter: blur(6px);
+  }
+
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .brand .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--lavender);
+    display: inline-block;
+    margin-right: 4px;
+    box-shadow: 0 0 0 4px var(--lavender-pale);
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-size: 21px;
+    font-weight: 500;
+    letter-spacing: 0.005em;
+    margin: 0;
+    color: var(--ink);
+  }
+
+  nav a {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--ink-dim);
+    text-decoration: none;
+    margin-left: 22px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  nav a:hover { color: var(--lavender-deep); border-bottom-color: var(--lavender); }
+
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 56px 32px 100px;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--lavender-deep);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hero-eyebrow::before {
+    content: "";
+    width: 18px;
+    height: 1px;
+    background: var(--lavender);
+  }
+
+  .hero h2 {
+    font-family: var(--serif);
+    font-size: 38px;
+    font-weight: 500;
+    line-height: 1.28;
+    max-width: 660px;
+    margin: 0 0 18px;
+    color: var(--ink);
+  }
+
+  .hero p {
+    color: var(--ink-dim);
+    max-width: 570px;
+    font-size: 15.5px;
+    margin: 0 0 32px;
+  }
+
+  .fire-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 56px;
+  }
+
+  select.scenario {
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 13px 16px;
+    border-radius: 10px;
+    appearance: none;
+    cursor: pointer;
+  }
+  select.scenario:focus-visible { outline: 2px solid var(--lavender); outline-offset: 2px; }
+
+  button.fire {
+    background: var(--lavender);
+    color: #FCFAF5;
+    border: none;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 13.5px;
+    letter-spacing: 0.01em;
+    padding: 14px 24px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.12s ease, box-shadow 0.15s ease;
+    box-shadow: 0 2px 0 var(--lavender-deep);
+  }
+  button.fire:hover { background: var(--lavender-deep); }
+  button.fire:active { transform: translateY(2px); box-shadow: none; }
+  button.fire:disabled { opacity: 0.5; cursor: wait; box-shadow: none; }
+  button.fire:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+  .status-line {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-dim);
+  }
+
+  section.log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-top: 1px solid var(--line);
+    padding-top: 30px;
+    margin-bottom: 22px;
+  }
+
+  section.log-header h3 {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .empty-state {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-dim);
+    border: 1px dashed var(--line);
+    border-radius: 12px;
+    padding: 32px;
+    text-align: center;
+    background: var(--bg-panel);
+  }
+
+  .incident-card {
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 22px 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 2px rgba(66,60,78,0.04);
+    animation: rise-in 0.4s ease;
+  }
+
+  @keyframes rise-in {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .card-top .service {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+  .badge.sev-P1 { color: #8A4B4F; background: #F1DEDD; }
+  .badge.sev-P2 { color: #8A6B2E; background: #F3E6C9; }
+  .badge.sev-P3 { color: #4C6E47; background: #E3ECDD; }
+
+  .hypothesis {
+    font-size: 14.5px;
+    color: var(--ink);
+    margin: 4px 0 14px;
+  }
+
+  .meter-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .meter-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  .meter {
+    display: flex;
+    gap: 4px;
+  }
+  .meter span {
+    width: 18px;
+    height: 6px;
+    background: var(--line);
+    border-radius: 3px;
+  }
+  .meter span.filled.low { background: var(--ink-dim); }
+  .meter span.filled.medium { background: var(--rose); }
+  .meter span.filled.high { background: var(--lavender-deep); }
+
+  details summary {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--lavender-deep);
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    list-style: none;
+  }
+  details summary::-webkit-details-marker { display: none; }
+  details summary:hover { color: var(--ink); }
+
+  pre.postmortem {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink);
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 18px;
+    white-space: pre-wrap;
+    margin-top: 14px;
+    max-height: 340px;
+    overflow-y: auto;
+  }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 26px 32px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+    text-align: center;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .incident-card { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1><span class="dot"></span>Incident Commander Agent</h1>
+  </div>
+  <nav>
+    <a href="https://github.com/arleenkaur02/incident-commander-agent" target="_blank">Source</a>
+    <a href="/health">Health</a>
+    <a href="/incidents">Raw JSON</a>
+  </nav>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="hero-eyebrow">Live demo — no login required</div>
+    <h2>Fire a production alert. Watch an agent do the SRE's first ten minutes.</h2>
+    <p>
+      This pipeline correlates the alert against recent deploys, retrieves similar past
+      incidents, reasons about the most likely root cause with an explicit confidence
+      level, drafts the postmortem, and routes it to the right on-call engineer —
+      end to end, in real time.
+    </p>
+
+    <div class="fire-row">
+      <select class="scenario" id="scenario">
+        <option value="checkout">P1 — checkout-service error spike</option>
+        <option value="auth">P2 — auth-service latency regression</option>
+        <option value="inventory">P3 — inventory-service queue backup</option>
+      </select>
+      <button class="fire" id="fireBtn">Fire alert →</button>
+      <span class="status-line" id="statusLine"></span>
+    </div>
+  </div>
+
+  <section class="log-header">
+    <h3>Incident log</h3>
+    <span class="status-line" id="countLine"></span>
+  </section>
+
+  <div id="incidentList">
+    <div class="empty-state">No incidents yet. Fire an alert above to see the pipeline run.</div>
+  </div>
+</main>
+
+<footer>
+  Built by Arleen Kaur Teerthy · TypeScript · Express · Claude Sonnet · deployed on Render
+</footer>
+
+<script>
+  const scenarios = {
+    checkout: {
+      source: "datadog",
+      service: "checkout-service",
+      severity: "P1",
+      message: "Error rate on /checkout/confirm exceeded threshold",
+      metric: "http.5xx_rate",
+      threshold: "2%",
+      observedValue: "18.4%"
+    },
+    auth: {
+      source: "pagerduty",
+      service: "auth-service",
+      severity: "P2",
+      message: "p99 latency on /auth/token exceeded SLO",
+      metric: "http.p99_latency_ms",
+      threshold: "400ms",
+      observedValue: "2130ms"
+    },
+    inventory: {
+      source: "datadog",
+      service: "inventory-service",
+      severity: "P3",
+      message: "Queue depth on inventory-sync-worker growing steadily",
+      metric: "sqs.queue_depth",
+      threshold: "500",
+      observedValue: "4210"
+    }
+  };
+
+  const fireBtn = document.getElementById("fireBtn");
+  const statusLine = document.getElementById("statusLine");
+  const incidentList = document.getElementById("incidentList");
+  const countLine = document.getElementById("countLine");
+
+  function meterHtml(confidence) {
+    const levels = { low: 1, medium: 2, high: 3 };
+    const filled = levels[confidence] || 1;
+    let html = '<div class="meter-row"><span class="meter-label">Confidence</span><div class="meter">';
+    for (let i = 0; i < 3; i++) {
+      html += `<span class="${i < filled ? 'filled ' + confidence : ''}"></span>`;
+    }
+    html += "</div></div>";
+    return html;
+  }
+
+  function renderIncident(record) {
+    const a = record.alert;
+    const h = record.hypothesis;
+    const card = document.createElement("div");
+    card.className = "incident-card";
+    card.innerHTML = `
+      <div class="card-top">
+        <span class="service">${a.service}</span>
+        <span class="badge sev-${a.severity}">${a.severity}</span>
+      </div>
+      <div class="hypothesis">${h.summary}</div>
+      ${meterHtml(h.confidence)}
+      <details>
+        <summary>▸ View full postmortem draft &amp; reasoning</summary>
+        <pre class="postmortem">${record.postmortemDraft.replace(/</g, "&lt;")}</pre>
+      </details>
+    `;
+    return card;
+  }
+
+  async function loadIncidents() {
+    try {
+      const res = await fetch("/incidents");
+      const data = await res.json();
+      countLine.textContent = data.length + " total";
+      if (data.length === 0) return;
+      incidentList.innerHTML = "";
+      data.slice().reverse().forEach((r) => incidentList.appendChild(renderIncident(r)));
+    } catch (e) {
+      // Silent — health check via /health if this fails repeatedly.
+    }
+  }
+
+  fireBtn.addEventListener("click", async () => {
+    const key = document.getElementById("scenario").value;
+    const alert = {
+      ...scenarios[key],
+      id: "alert-" + Date.now(),
+      timestamp: new Date().toISOString()
+    };
+
+    fireBtn.disabled = true;
+    statusLine.textContent = "Processing… (deploy correlation → RAG retrieval → LLM reasoning → routing)";
+
+    try {
+      const res = await fetch("/webhooks/alert", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(alert)
+      });
+      const record = await res.json();
+      incidentList.querySelector(".empty-state")?.remove();
+      incidentList.prepend(renderIncident(record));
+      const count = incidentList.querySelectorAll(".incident-card").length;
+      countLine.textContent = count + " total";
+      statusLine.textContent = "Done — routed to " + record.routedTo.onCallEngineer;
+    } catch (e) {
+      statusLine.textContent = "Something went wrong — check /health";
+    } finally {
+      fireBtn.disabled = false;
+    }
+  });
+
+  loadIncidents();
+</script>
+</body>
+</html>
