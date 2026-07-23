@@ -1,0 +1,34 @@
+[
+  {
+    "id": "inc-0421",
+    "service": "checkout-service",
+    "title": "5xx spike after payment gateway client upgrade",
+    "rootCause": "New gateway client v2 silently changed the timeout default from 30s to 5s, causing confirmation calls to fail under normal load.",
+    "resolution": "Rolled back gateway client, added explicit timeout config, added contract test for client defaults.",
+    "tags": ["checkout-service", "payments", "gateway", "5xx", "timeout"]
+  },
+  {
+    "id": "inc-0388",
+    "service": "auth-service",
+    "title": "Token endpoint latency regression after rate limiter deploy",
+    "rootCause": "Rate limiting middleware performed a synchronous Redis call on every request without connection pooling, adding ~1.5s under load.",
+    "resolution": "Switched to pooled Redis client and made limiter checks async with a local cache fallback.",
+    "tags": ["auth-service", "latency", "rate-limit", "redis"]
+  },
+  {
+    "id": "inc-0295",
+    "service": "inventory-service",
+    "title": "SQS queue backup during batch write rollout",
+    "rootCause": "Batched writes introduced a lock contention issue on the inventory table, slowing consumer throughput below producer rate.",
+    "resolution": "Reduced batch size, added consumer autoscaling based on queue depth.",
+    "tags": ["inventory-service", "sqs", "queue", "batch", "database"]
+  },
+  {
+    "id": "inc-0201",
+    "service": "checkout-service",
+    "title": "Checkout errors during flash sale traffic spike",
+    "rootCause": "Autoscaling policy did not account for burst traffic patterns, leading to connection pool exhaustion.",
+    "resolution": "Pre-scaled ahead of known sale events, added circuit breaker on downstream payment calls.",
+    "tags": ["checkout-service", "autoscaling", "traffic", "connection-pool"]
+  }
+]

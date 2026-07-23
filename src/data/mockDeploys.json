@@ -1,0 +1,34 @@
+[
+  {
+    "sha": "a1c9f21",
+    "service": "checkout-service",
+    "author": "priya.nair",
+    "message": "Migrate payment confirmation to new gateway client v3",
+    "filesChanged": ["src/payments/gatewayClient.ts", "src/checkout/confirmHandler.ts"],
+    "deployedAt": "2026-07-23T13:47:00Z"
+  },
+  {
+    "sha": "b7de301",
+    "service": "auth-service",
+    "author": "miguel.santos",
+    "message": "Add rate limiting middleware to token endpoint",
+    "filesChanged": ["src/middleware/rateLimit.ts"],
+    "deployedAt": "2026-07-23T12:30:00Z"
+  },
+  {
+    "sha": "c4f8b12",
+    "service": "inventory-service",
+    "author": "arleen.kaur",
+    "message": "Batch inventory-sync-worker writes to reduce DB load",
+    "filesChanged": ["src/workers/inventorySync.ts"],
+    "deployedAt": "2026-07-22T09:15:00Z"
+  },
+  {
+    "sha": "d2a9e77",
+    "service": "recommendations-service",
+    "author": "james.oduya",
+    "message": "Bump model version for ranking pipeline",
+    "filesChanged": ["src/ranking/model.ts"],
+    "deployedAt": "2026-07-21T17:00:00Z"
+  }
+]

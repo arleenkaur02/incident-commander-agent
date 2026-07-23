@@ -1,0 +1,35 @@
+[
+  {
+    "id": "alert-1001",
+    "source": "datadog",
+    "service": "checkout-service",
+    "severity": "P1",
+    "message": "Error rate on /checkout/confirm exceeded threshold",
+    "metric": "http.5xx_rate",
+    "threshold": "2%",
+    "observedValue": "18.4%",
+    "timestamp": "2026-07-23T14:02:11Z"
+  },
+  {
+    "id": "alert-1002",
+    "source": "pagerduty",
+    "service": "auth-service",
+    "severity": "P2",
+    "message": "p99 latency on /auth/token exceeded SLO",
+    "metric": "http.p99_latency_ms",
+    "threshold": "400ms",
+    "observedValue": "2130ms",
+    "timestamp": "2026-07-23T14:05:44Z"
+  },
+  {
+    "id": "alert-1003",
+    "source": "datadog",
+    "service": "inventory-service",
+    "severity": "P3",
+    "message": "Queue depth on inventory-sync-worker growing steadily",
+    "metric": "sqs.queue_depth",
+    "threshold": "500",
+    "observedValue": "4210",
+    "timestamp": "2026-07-23T14:11:02Z"
+  }
+]

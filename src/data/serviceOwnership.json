@@ -1,0 +1,26 @@
+[
+  {
+    "service": "checkout-service",
+    "team": "Payments Platform",
+    "slackChannel": "#payments-oncall",
+    "onCallEngineer": "priya.nair"
+  },
+  {
+    "service": "auth-service",
+    "team": "Identity & Access",
+    "slackChannel": "#iam-oncall",
+    "onCallEngineer": "miguel.santos"
+  },
+  {
+    "service": "inventory-service",
+    "team": "Supply Chain Systems",
+    "slackChannel": "#supply-chain-oncall",
+    "onCallEngineer": "arleen.kaur"
+  },
+  {
+    "service": "recommendations-service",
+    "team": "ML Platform",
+    "slackChannel": "#ml-platform-oncall",
+    "onCallEngineer": "james.oduya"
+  }
+]
