@@ -6,7 +6,11 @@ Modeled on the incident-response workflows used at large-scale infrastructure te
 
 ---
 
+## Why this exists
 
+Most "AI agent" demos are glorified API wrappers. This project is built to demonstrate something closer to what an Applied AI Engineer actually ships on an SRE/Platform team: a multi-stage reasoning pipeline that combines **structured data correlation** (deploys, ownership maps), **retrieval** (a lightweight RAG layer over historical incidents), and **LLM reasoning under uncertainty** (a root-cause hypothesis with an explicit, justified confidence level) — then produces an artifact a human actually needs (a postmortem draft) instead of just a chat response.
+
+## Architecture
 
 ```mermaid
 flowchart LR
