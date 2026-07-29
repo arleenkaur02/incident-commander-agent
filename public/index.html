@@ -18,6 +18,7 @@
     --lavender-pale: #E7E1F5;
     --rose: #C98F94;
     --sage: #93A98C;
+    --gold: #C9A24B;
     --ink: #423C4E;
     --ink-dim: #8C8296;
     --serif: "Fraunces", Georgia, serif;
@@ -49,283 +50,239 @@
     gap: 12px;
     background: rgba(252,250,245,0.6);
     backdrop-filter: blur(6px);
+    position: sticky;
+    top: 0;
+    z-index: 10;
   }
 
-  .brand {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-  }
-
+  .brand { display: flex; align-items: baseline; gap: 10px; }
   .brand .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--lavender);
-    display: inline-block;
-    margin-right: 4px;
-    box-shadow: 0 0 0 4px var(--lavender-pale);
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--lavender); display: inline-block;
+    margin-right: 4px; box-shadow: 0 0 0 4px var(--lavender-pale);
   }
 
   h1 {
-    font-family: var(--serif);
-    font-size: 21px;
-    font-weight: 500;
-    letter-spacing: 0.005em;
-    margin: 0;
-    color: var(--ink);
+    font-family: var(--serif); font-size: 21px; font-weight: 500;
+    letter-spacing: 0.005em; margin: 0; color: var(--ink);
   }
 
   nav a {
-    font-family: var(--mono);
-    font-size: 11.5px;
-    color: var(--ink-dim);
-    text-decoration: none;
-    margin-left: 22px;
-    padding-bottom: 2px;
+    font-family: var(--mono); font-size: 11.5px; color: var(--ink-dim);
+    text-decoration: none; margin-left: 22px; padding-bottom: 2px;
     border-bottom: 1px solid transparent;
     transition: color 0.15s ease, border-color 0.15s ease;
   }
   nav a:hover { color: var(--lavender-deep); border-bottom-color: var(--lavender); }
 
-  main {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 56px 32px 100px;
+  main { max-width: 960px; margin: 0 auto; padding: 40px 32px 100px; }
+
+  /* Tabs */
+  .tabbar {
+    display: flex; gap: 8px; margin-bottom: 40px;
+    border-bottom: 1px solid var(--line);
+  }
+  .tab-btn {
+    font-family: var(--sans); font-weight: 600; font-size: 13.5px;
+    color: var(--ink-dim); background: none; border: none;
+    padding: 12px 18px; cursor: pointer; position: relative;
+    border-radius: 8px 8px 0 0;
+    transition: color 0.15s ease, background 0.15s ease;
+  }
+  .tab-btn:hover { color: var(--ink); background: var(--lavender-pale); }
+  .tab-btn.active { color: var(--lavender-deep); }
+  .tab-btn.active::after {
+    content: ""; position: absolute; left: 10px; right: 10px; bottom: -1px;
+    height: 2px; background: var(--lavender-deep); border-radius: 2px;
   }
 
+  .tab-panel { display: none; animation: fade-in 0.25s ease; }
+  .tab-panel.active { display: block; }
+  @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+  /* Hero (Live Demo tab) */
   .hero-eyebrow {
-    font-family: var(--mono);
-    font-size: 11.5px;
-    color: var(--lavender-deep);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    margin-bottom: 18px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    font-family: var(--mono); font-size: 11.5px; color: var(--lavender-deep);
+    letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 18px;
+    display: flex; align-items: center; gap: 8px;
   }
-  .hero-eyebrow::before {
-    content: "";
-    width: 18px;
-    height: 1px;
-    background: var(--lavender);
-  }
+  .hero-eyebrow::before { content: ""; width: 18px; height: 1px; background: var(--lavender); }
 
   .hero h2 {
-    font-family: var(--serif);
-    font-size: 38px;
-    font-weight: 500;
-    line-height: 1.28;
-    max-width: 660px;
-    margin: 0 0 18px;
-    color: var(--ink);
+    font-family: var(--serif); font-size: 34px; font-weight: 500; line-height: 1.28;
+    max-width: 660px; margin: 0 0 16px; color: var(--ink);
   }
+  .hero p { color: var(--ink-dim); max-width: 570px; font-size: 15px; margin: 0 0 28px; }
 
-  .hero p {
-    color: var(--ink-dim);
-    max-width: 570px;
-    font-size: 15.5px;
-    margin: 0 0 32px;
-  }
-
-  .fire-row {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    flex-wrap: wrap;
-    margin-bottom: 56px;
-  }
+  .fire-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 36px; }
 
   select.scenario {
-    background: var(--bg-panel);
-    border: 1px solid var(--line);
-    color: var(--ink);
-    font-family: var(--mono);
-    font-size: 12px;
-    padding: 13px 16px;
-    border-radius: 10px;
-    appearance: none;
-    cursor: pointer;
+    background: var(--bg-panel); border: 1px solid var(--line); color: var(--ink);
+    font-family: var(--mono); font-size: 12px; padding: 13px 16px; border-radius: 10px;
+    appearance: none; cursor: pointer;
   }
   select.scenario:focus-visible { outline: 2px solid var(--lavender); outline-offset: 2px; }
 
   button.fire {
-    background: var(--lavender);
-    color: #FCFAF5;
-    border: none;
-    font-family: var(--sans);
-    font-weight: 600;
-    font-size: 13.5px;
-    letter-spacing: 0.01em;
-    padding: 14px 24px;
-    border-radius: 10px;
-    cursor: pointer;
+    background: var(--lavender); color: #FCFAF5; border: none;
+    font-family: var(--sans); font-weight: 600; font-size: 13.5px; letter-spacing: 0.01em;
+    padding: 14px 24px; border-radius: 10px; cursor: pointer;
     transition: background 0.15s ease, transform 0.12s ease, box-shadow 0.15s ease;
     box-shadow: 0 2px 0 var(--lavender-deep);
   }
   button.fire:hover { background: var(--lavender-deep); }
   button.fire:active { transform: translateY(2px); box-shadow: none; }
   button.fire:disabled { opacity: 0.5; cursor: wait; box-shadow: none; }
-  button.fire:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 
-  .status-line {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--ink-dim);
+  .status-line { font-family: var(--mono); font-size: 12px; color: var(--ink-dim); }
+
+  .filter-row { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
+  .filter-chip {
+    font-family: var(--mono); font-size: 11px; padding: 6px 13px; border-radius: 20px;
+    border: 1px solid var(--line); background: var(--bg-panel); color: var(--ink-dim);
+    cursor: pointer; transition: all 0.15s ease;
   }
+  .filter-chip:hover { border-color: var(--lavender); color: var(--ink); }
+  .filter-chip.active { background: var(--lavender); border-color: var(--lavender); color: #FCFAF5; }
 
   section.log-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    border-top: 1px solid var(--line);
-    padding-top: 30px;
-    margin-bottom: 22px;
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-top: 1px solid var(--line); padding-top: 26px; margin-bottom: 18px;
   }
-
-  section.log-header h3 {
-    font-family: var(--serif);
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--ink);
-    margin: 0;
-  }
+  section.log-header h3 { font-family: var(--serif); font-size: 16px; font-weight: 500; color: var(--ink); margin: 0; }
 
   .empty-state {
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--ink-dim);
-    border: 1px dashed var(--line);
-    border-radius: 12px;
-    padding: 32px;
-    text-align: center;
-    background: var(--bg-panel);
+    font-family: var(--mono); font-size: 13px; color: var(--ink-dim);
+    border: 1px dashed var(--line); border-radius: 12px; padding: 32px;
+    text-align: center; background: var(--bg-panel);
   }
 
   .incident-card {
-    background: var(--bg-panel);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 22px 24px;
-    margin-bottom: 16px;
-    box-shadow: 0 1px 2px rgba(66,60,78,0.04);
+    background: var(--bg-panel); border: 1px solid var(--line); border-radius: 14px;
+    padding: 22px 24px; margin-bottom: 16px; box-shadow: 0 1px 2px rgba(66,60,78,0.04);
     animation: rise-in 0.4s ease;
   }
+  @keyframes rise-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
 
-  @keyframes rise-in {
-    from { opacity: 0; transform: translateY(-8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .card-top {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 12px;
-    flex-wrap: wrap;
-  }
-
-  .card-top .service {
-    font-family: var(--serif);
-    font-size: 16px;
-    font-weight: 500;
-  }
+  .card-top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+  .card-top .service { font-family: var(--serif); font-size: 16px; font-weight: 500; }
 
   .badge {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-weight: 500;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 20px; font-weight: 500;
   }
   .badge.sev-P1 { color: #8A4B4F; background: #F1DEDD; }
   .badge.sev-P2 { color: #8A6B2E; background: #F3E6C9; }
   .badge.sev-P3 { color: #4C6E47; background: #E3ECDD; }
 
-  .hypothesis {
-    font-size: 14.5px;
-    color: var(--ink);
-    margin: 4px 0 14px;
-  }
+  .hypothesis { font-size: 14.5px; color: var(--ink); margin: 4px 0 14px; }
 
-  .meter-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 14px;
-  }
-
+  .meter-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
   .meter-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--ink-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    white-space: nowrap;
+    font-family: var(--mono); font-size: 10px; color: var(--ink-dim);
+    text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap;
   }
-
-  .meter {
-    display: flex;
-    gap: 4px;
-  }
-  .meter span {
-    width: 18px;
-    height: 6px;
-    background: var(--line);
-    border-radius: 3px;
-  }
+  .meter { display: flex; gap: 4px; }
+  .meter span { width: 18px; height: 6px; background: var(--line); border-radius: 3px; }
   .meter span.filled.low { background: var(--ink-dim); }
   .meter span.filled.medium { background: var(--rose); }
   .meter span.filled.high { background: var(--lavender-deep); }
 
   details summary {
-    font-family: var(--mono);
-    font-size: 11.5px;
-    color: var(--lavender-deep);
-    cursor: pointer;
-    letter-spacing: 0.02em;
-    list-style: none;
+    font-family: var(--mono); font-size: 11.5px; color: var(--lavender-deep);
+    cursor: pointer; letter-spacing: 0.02em; list-style: none;
   }
   details summary::-webkit-details-marker { display: none; }
   details summary:hover { color: var(--ink); }
 
   pre.postmortem {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--ink);
-    background: var(--bg-raised);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 18px;
-    white-space: pre-wrap;
-    margin-top: 14px;
-    max-height: 340px;
-    overflow-y: auto;
+    font-family: var(--mono); font-size: 12px; color: var(--ink); background: var(--bg-raised);
+    border: 1px solid var(--line); border-radius: 10px; padding: 18px; white-space: pre-wrap;
+    margin-top: 14px; max-height: 340px; overflow-y: auto;
   }
+
+  /* Analytics tab */
+  .stat-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px; margin-bottom: 36px;
+  }
+  .stat-card {
+    background: var(--bg-panel); border: 1px solid var(--line); border-radius: 14px;
+    padding: 20px; box-shadow: 0 1px 2px rgba(66,60,78,0.04);
+  }
+  .stat-card .stat-value {
+    font-family: var(--serif); font-size: 30px; font-weight: 500; color: var(--lavender-deep);
+    margin-bottom: 4px;
+  }
+  .stat-card .stat-label {
+    font-family: var(--mono); font-size: 11px; color: var(--ink-dim);
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+
+  .chart-block {
+    background: var(--bg-panel); border: 1px solid var(--line); border-radius: 14px;
+    padding: 24px; margin-bottom: 20px;
+  }
+  .chart-block h4 {
+    font-family: var(--serif); font-size: 15px; font-weight: 500; margin: 0 0 18px; color: var(--ink);
+  }
+  .bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .bar-row .bar-label {
+    font-family: var(--mono); font-size: 11.5px; color: var(--ink-dim); width: 140px;
+    flex-shrink: 0; text-align: right;
+  }
+  .bar-track { flex: 1; background: var(--bg-raised); border-radius: 6px; height: 18px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 6px; transition: width 0.5s ease; }
+  .bar-count { font-family: var(--mono); font-size: 11.5px; color: var(--ink); width: 24px; }
+
+  /* Chat tab */
+  .chat-shell {
+    background: var(--bg-panel); border: 1px solid var(--line); border-radius: 14px;
+    display: flex; flex-direction: column; height: 480px;
+  }
+  .chat-messages { flex: 1; overflow-y: auto; padding: 20px 22px; display: flex; flex-direction: column; gap: 12px; }
+  .chat-msg { max-width: 78%; padding: 11px 15px; border-radius: 14px; font-size: 14px; line-height: 1.5; }
+  .chat-msg.user {
+    align-self: flex-end; background: var(--lavender); color: #FCFAF5; border-bottom-right-radius: 3px;
+  }
+  .chat-msg.agent {
+    align-self: flex-start; background: var(--bg-raised); color: var(--ink); border-bottom-left-radius: 3px;
+  }
+  .chat-msg.agent.thinking { color: var(--ink-dim); font-style: italic; }
+  .chat-input-row {
+    display: flex; gap: 10px; padding: 16px; border-top: 1px solid var(--line);
+  }
+  .chat-input-row input {
+    flex: 1; border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px;
+    font-family: var(--sans); font-size: 13.5px; background: var(--bg); color: var(--ink);
+  }
+  .chat-input-row input:focus-visible { outline: 2px solid var(--lavender); outline-offset: 1px; }
+  .chat-input-row button {
+    background: var(--lavender); color: #FCFAF5; border: none; border-radius: 10px;
+    padding: 0 20px; font-family: var(--sans); font-weight: 600; font-size: 13px; cursor: pointer;
+  }
+  .chat-input-row button:hover { background: var(--lavender-deep); }
+  .chat-input-row button:disabled { opacity: 0.5; cursor: wait; }
+
+  .suggestion-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .suggestion-chip {
+    font-family: var(--mono); font-size: 11px; padding: 7px 13px; border-radius: 20px;
+    border: 1px solid var(--line); background: var(--bg-panel); color: var(--ink-dim); cursor: pointer;
+  }
+  .suggestion-chip:hover { border-color: var(--lavender); color: var(--lavender-deep); }
 
   footer {
-    border-top: 1px solid var(--line);
-    padding: 26px 32px;
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--ink-dim);
-    text-align: center;
+    border-top: 1px solid var(--line); padding: 26px 32px; font-family: var(--mono);
+    font-size: 11px; color: var(--ink-dim); text-align: center;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .incident-card { animation: none; }
-  }
+  @media (prefers-reduced-motion: reduce) { .incident-card { animation: none; } }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="brand">
-    <h1><span class="dot"></span>Incident Commander Agent</h1>
-  </div>
+  <div class="brand"><h1><span class="dot"></span>Incident Commander Agent</h1></div>
   <nav>
     <a href="https://github.com/arleenkaur02/incident-commander-agent" target="_blank">Source</a>
     <a href="/health">Health</a>
@@ -334,14 +291,20 @@
 </header>
 
 <main>
-  <div class="hero">
+  <div class="tabbar">
+    <button class="tab-btn active" data-tab="demo">Live Demo</button>
+    <button class="tab-btn" data-tab="analytics">Analytics</button>
+    <button class="tab-btn" data-tab="chat">Ask the Agent</button>
+  </div>
+
+  <!-- LIVE DEMO TAB -->
+  <div class="tab-panel active" id="tab-demo">
     <div class="hero-eyebrow">Live demo — no login required</div>
     <h2>Fire a production alert. Watch an agent do the SRE's first ten minutes.</h2>
     <p>
       This pipeline correlates the alert against recent deploys, retrieves similar past
       incidents, reasons about the most likely root cause with an explicit confidence
-      level, drafts the postmortem, and routes it to the right on-call engineer —
-      end to end, in real time.
+      level, drafts the postmortem, and routes it to the right on-call engineer.
     </p>
 
     <div class="fire-row">
@@ -353,15 +316,57 @@
       <button class="fire" id="fireBtn">Fire alert →</button>
       <span class="status-line" id="statusLine"></span>
     </div>
+
+    <section class="log-header">
+      <h3>Incident log</h3>
+      <span class="status-line" id="countLine"></span>
+    </section>
+
+    <div class="filter-row">
+      <button class="filter-chip active" data-filter="all">All</button>
+      <button class="filter-chip" data-filter="P1">P1</button>
+      <button class="filter-chip" data-filter="P2">P2</button>
+      <button class="filter-chip" data-filter="P3">P3</button>
+    </div>
+
+    <div id="incidentList">
+      <div class="empty-state">No incidents yet. Fire an alert above to see the pipeline run.</div>
+    </div>
   </div>
 
-  <section class="log-header">
-    <h3>Incident log</h3>
-    <span class="status-line" id="countLine"></span>
-  </section>
+  <!-- ANALYTICS TAB -->
+  <div class="tab-panel" id="tab-analytics">
+    <div class="hero-eyebrow">Computed live from this session's incident log</div>
+    <h2 style="font-size: 26px;">Analytics</h2>
+    <div class="stat-grid" id="statGrid"></div>
+    <div class="chart-block">
+      <h4>Incidents by service</h4>
+      <div id="serviceChart"></div>
+    </div>
+    <div class="chart-block">
+      <h4>Confidence distribution</h4>
+      <div id="confidenceChart"></div>
+    </div>
+  </div>
 
-  <div id="incidentList">
-    <div class="empty-state">No incidents yet. Fire an alert above to see the pipeline run.</div>
+  <!-- CHAT TAB -->
+  <div class="tab-panel" id="tab-chat">
+    <div class="hero-eyebrow">Ask questions about your incidents</div>
+    <h2 style="font-size: 26px; margin-bottom: 16px;">Ask the Agent</h2>
+    <div class="suggestion-chips">
+      <button class="suggestion-chip" data-q="What incidents have happened so far?">What incidents have happened so far?</button>
+      <button class="suggestion-chip" data-q="Who is on call for checkout-service?">Who's on call for checkout-service?</button>
+      <button class="suggestion-chip" data-q="Have we seen this kind of failure before?">Have we seen this kind of failure before?</button>
+    </div>
+    <div class="chat-shell">
+      <div class="chat-messages" id="chatMessages">
+        <div class="chat-msg agent">Hi — I can answer questions about incidents this system has processed, past postmortems, and who owns what. Fire an alert on the Live Demo tab first, then ask me about it.</div>
+      </div>
+      <div class="chat-input-row">
+        <input type="text" id="chatInput" placeholder="Ask about an incident, root cause, or on-call owner…" />
+        <button id="chatSend">Send</button>
+      </div>
+    </div>
   </div>
 </main>
 
@@ -370,33 +375,33 @@
 </footer>
 
 <script>
+  // ---------- Tab switching ----------
+  document.querySelectorAll(".tab-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".tab-btn").forEach((b) => b.classList.remove("active"));
+      document.querySelectorAll(".tab-panel").forEach((p) => p.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
+      if (btn.dataset.tab === "analytics") renderAnalytics();
+    });
+  });
+
+  // ---------- Live Demo ----------
   const scenarios = {
     checkout: {
-      source: "datadog",
-      service: "checkout-service",
-      severity: "P1",
+      source: "datadog", service: "checkout-service", severity: "P1",
       message: "Error rate on /checkout/confirm exceeded threshold",
-      metric: "http.5xx_rate",
-      threshold: "2%",
-      observedValue: "18.4%"
+      metric: "http.5xx_rate", threshold: "2%", observedValue: "18.4%"
     },
     auth: {
-      source: "pagerduty",
-      service: "auth-service",
-      severity: "P2",
+      source: "pagerduty", service: "auth-service", severity: "P2",
       message: "p99 latency on /auth/token exceeded SLO",
-      metric: "http.p99_latency_ms",
-      threshold: "400ms",
-      observedValue: "2130ms"
+      metric: "http.p99_latency_ms", threshold: "400ms", observedValue: "2130ms"
     },
     inventory: {
-      source: "datadog",
-      service: "inventory-service",
-      severity: "P3",
+      source: "datadog", service: "inventory-service", severity: "P3",
       message: "Queue depth on inventory-sync-worker growing steadily",
-      metric: "sqs.queue_depth",
-      threshold: "500",
-      observedValue: "4210"
+      metric: "sqs.queue_depth", threshold: "500", observedValue: "4210"
     }
   };
 
@@ -404,24 +409,21 @@
   const statusLine = document.getElementById("statusLine");
   const incidentList = document.getElementById("incidentList");
   const countLine = document.getElementById("countLine");
+  let allIncidents = [];
+  let activeFilter = "all";
 
   function meterHtml(confidence) {
     const levels = { low: 1, medium: 2, high: 3 };
     const filled = levels[confidence] || 1;
     let html = '<div class="meter-row"><span class="meter-label">Confidence</span><div class="meter">';
-    for (let i = 0; i < 3; i++) {
-      html += `<span class="${i < filled ? 'filled ' + confidence : ''}"></span>`;
-    }
+    for (let i = 0; i < 3; i++) html += `<span class="${i < filled ? 'filled ' + confidence : ''}"></span>`;
     html += "</div></div>";
     return html;
   }
 
-  function renderIncident(record) {
-    const a = record.alert;
-    const h = record.hypothesis;
-    const card = document.createElement("div");
-    card.className = "incident-card";
-    card.innerHTML = `
+  function incidentCardHtml(record) {
+    const a = record.alert, h = record.hypothesis;
+    return `
       <div class="card-top">
         <span class="service">${a.service}</span>
         <span class="badge sev-${a.severity}">${a.severity}</span>
@@ -433,50 +435,161 @@
         <pre class="postmortem">${record.postmortemDraft.replace(/</g, "&lt;")}</pre>
       </details>
     `;
-    return card;
   }
+
+  function renderIncidentList() {
+    const filtered = activeFilter === "all"
+      ? allIncidents
+      : allIncidents.filter((r) => r.alert.severity === activeFilter);
+
+    countLine.textContent = allIncidents.length + " total";
+    incidentList.innerHTML = "";
+
+    if (filtered.length === 0) {
+      incidentList.innerHTML = `<div class="empty-state">${allIncidents.length === 0 ? "No incidents yet. Fire an alert above to see the pipeline run." : "No incidents match this filter."}</div>`;
+      return;
+    }
+
+    filtered.slice().reverse().forEach((r) => {
+      const card = document.createElement("div");
+      card.className = "incident-card";
+      card.innerHTML = incidentCardHtml(r);
+      incidentList.appendChild(card);
+    });
+  }
+
+  document.querySelectorAll(".filter-chip").forEach((chip) => {
+    chip.addEventListener("click", () => {
+      document.querySelectorAll(".filter-chip").forEach((c) => c.classList.remove("active"));
+      chip.classList.add("active");
+      activeFilter = chip.dataset.filter;
+      renderIncidentList();
+    });
+  });
 
   async function loadIncidents() {
     try {
       const res = await fetch("/incidents");
-      const data = await res.json();
-      countLine.textContent = data.length + " total";
-      if (data.length === 0) return;
-      incidentList.innerHTML = "";
-      data.slice().reverse().forEach((r) => incidentList.appendChild(renderIncident(r)));
-    } catch (e) {
-      // Silent — health check via /health if this fails repeatedly.
-    }
+      allIncidents = await res.json();
+      renderIncidentList();
+    } catch (e) { /* silent */ }
   }
 
   fireBtn.addEventListener("click", async () => {
     const key = document.getElementById("scenario").value;
-    const alert = {
-      ...scenarios[key],
-      id: "alert-" + Date.now(),
-      timestamp: new Date().toISOString()
-    };
+    const alert = { ...scenarios[key], id: "alert-" + Date.now(), timestamp: new Date().toISOString() };
 
     fireBtn.disabled = true;
     statusLine.textContent = "Processing… (deploy correlation → RAG retrieval → LLM reasoning → routing)";
 
     try {
       const res = await fetch("/webhooks/alert", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(alert)
+        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(alert)
       });
       const record = await res.json();
-      incidentList.querySelector(".empty-state")?.remove();
-      incidentList.prepend(renderIncident(record));
-      const count = incidentList.querySelectorAll(".incident-card").length;
-      countLine.textContent = count + " total";
+      allIncidents.push(record);
+      renderIncidentList();
       statusLine.textContent = "Done — routed to " + record.routedTo.onCallEngineer;
     } catch (e) {
       statusLine.textContent = "Something went wrong — check /health";
     } finally {
       fireBtn.disabled = false;
     }
+  });
+
+  // ---------- Analytics ----------
+  const barColors = { P1: "#C98F94", P2: "#C9A24B", P3: "#93A98C", low: "#8C8296", medium: "#C98F94", high: "#7C6BB0" };
+
+  function renderAnalytics() {
+    const statGrid = document.getElementById("statGrid");
+    const serviceChart = document.getElementById("serviceChart");
+    const confidenceChart = document.getElementById("confidenceChart");
+
+    const total = allIncidents.length;
+    const highConfCount = allIncidents.filter((r) => r.hypothesis.confidence === "high").length;
+    const highConfPct = total ? Math.round((highConfCount / total) * 100) : 0;
+    const services = {};
+    allIncidents.forEach((r) => { services[r.alert.service] = (services[r.alert.service] || 0) + 1; });
+    const distinctServices = Object.keys(services).length;
+    const topService = Object.entries(services).sort((a, b) => b[1] - a[1])[0];
+
+    statGrid.innerHTML = `
+      <div class="stat-card"><div class="stat-value">${total}</div><div class="stat-label">Total incidents</div></div>
+      <div class="stat-card"><div class="stat-value">${highConfPct}%</div><div class="stat-label">High confidence hypotheses</div></div>
+      <div class="stat-card"><div class="stat-value">${distinctServices}</div><div class="stat-label">Services affected</div></div>
+      <div class="stat-card"><div class="stat-value">${topService ? topService[0].replace('-service','') : '—'}</div><div class="stat-label">Most affected service</div></div>
+    `;
+
+    if (total === 0) {
+      serviceChart.innerHTML = confidenceChart.innerHTML = '<div class="empty-state">Fire some alerts on the Live Demo tab to see analytics.</div>';
+      return;
+    }
+
+    const maxServiceCount = Math.max(...Object.values(services));
+    serviceChart.innerHTML = Object.entries(services).map(([svc, count]) => `
+      <div class="bar-row">
+        <span class="bar-label">${svc}</span>
+        <div class="bar-track"><div class="bar-fill" style="width:${(count / maxServiceCount) * 100}%; background: var(--lavender-deep);"></div></div>
+        <span class="bar-count">${count}</span>
+      </div>
+    `).join("");
+
+    const confCounts = { low: 0, medium: 0, high: 0 };
+    allIncidents.forEach((r) => { confCounts[r.hypothesis.confidence] = (confCounts[r.hypothesis.confidence] || 0) + 1; });
+    const maxConf = Math.max(...Object.values(confCounts), 1);
+    confidenceChart.innerHTML = Object.entries(confCounts).map(([level, count]) => `
+      <div class="bar-row">
+        <span class="bar-label">${level}</span>
+        <div class="bar-track"><div class="bar-fill" style="width:${(count / maxConf) * 100}%; background: ${barColors[level]};"></div></div>
+        <span class="bar-count">${count}</span>
+      </div>
+    `).join("");
+  }
+
+  // ---------- Chat ----------
+  const chatMessages = document.getElementById("chatMessages");
+  const chatInput = document.getElementById("chatInput");
+  const chatSend = document.getElementById("chatSend");
+  let chatHistory = [];
+
+  function appendChatMsg(role, text, isThinking = false) {
+    const div = document.createElement("div");
+    div.className = "chat-msg " + role + (isThinking ? " thinking" : "");
+    div.textContent = text;
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    return div;
+  }
+
+  async function sendChat(message) {
+    if (!message.trim()) return;
+    appendChatMsg("user", message);
+    chatInput.value = "";
+    chatSend.disabled = true;
+    const thinkingEl = appendChatMsg("agent", "Thinking…", true);
+
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message, history: chatHistory })
+      });
+      const data = await res.json();
+      thinkingEl.remove();
+      appendChatMsg("agent", data.reply || "I couldn't generate a response.");
+      chatHistory.push({ role: "user", content: message });
+      chatHistory.push({ role: "assistant", content: data.reply || "" });
+    } catch (e) {
+      thinkingEl.remove();
+      appendChatMsg("agent", "Something went wrong reaching the chat agent — check /health.");
+    } finally {
+      chatSend.disabled = false;
+    }
+  }
+
+  chatSend.addEventListener("click", () => sendChat(chatInput.value));
+  chatInput.addEventListener("keydown", (e) => { if (e.key === "Enter") sendChat(chatInput.value); });
+  document.querySelectorAll(".suggestion-chip").forEach((chip) => {
+    chip.addEventListener("click", () => sendChat(chip.dataset.q));
   });
 
   loadIncidents();
